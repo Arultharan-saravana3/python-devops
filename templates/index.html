@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000; /* Fond noir */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff; /* Texte par défaut en blanc */
+    }
+    .container {
+      background-color: #003366; /* Fond bleu profond */
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+      width: 300px;
+    }
+    .container h1 {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #007bff; /* Bordure bleue */
+      background-color: #fff;
+      color: #000; /* Texte noir pour une bonne lisibilité */
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #007bff;
+      background-color: #fff;
+      color: #000;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff; /* Bouton bleu */
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #000; /* Fond noir */
+      border: 2px solid #007bff; /* Bordure bleue */
+      border-radius: 4px;
+      text-align: center;
+    }
+    .result h3 {
+      margin: 0;
+      color: #007bff; /* Texte en bleu */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Health Calculator</h1>
+    <form action="/calculate" method="POST">
+      <input type="text" name="weight" placeholder="Weight (kg)" required>
+      <input type="text" name="height" placeholder="Height (m)" required>
+      <input type="text" name="age" placeholder="Age (years)" required>
+      <select name="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <button type="submit">Calculate</button>
+    </form>
+    
+    {% if bmi is not none %}
+    <div class="result">
+      <h3>BMI: {{ bmi }}</h3>
+      <h3>BMR: {{ bmr }}</h3>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
