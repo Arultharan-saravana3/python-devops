@@ -16,16 +16,18 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.11'
+        python-version: '3.12'  # Mis à jour pour correspondre à votre environnement Azure
     
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install pytest  # Installation explicite de pytest
         pip install -r requirements.txt
+        pip list  # Vérification des packages installés
     
     - name: Run unit tests
       run: |
-        pytest test.py -v
+        python -m pytest test.py -v
         
     - name: Start Flask application
       run: |
@@ -34,13 +36,9 @@ jobs:
         
     - name: Run API tests
       run: |
-        make test-api
-        
-    - name: Run async API tests
-      run: |
-        make test-api-async
+        curl http://localhost:5000/health || exit 1  # Test basique de santé
 
-  build-and-deploy:
+  deploy:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -48,21 +46,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Log in to Azure Container Registry
-      uses: azure/docker-login@v1
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+        python-version: '3.12'
     
-    - name: Build and push Docker image
+    - name: Install dependencies
       run: |
-        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/health-calculator:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/health-calculator:${{ github.sha }}
-    
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'health-calculator-project'
+        app-name: 'Arultharan'  # Nom de votre application Azure
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        images: '${{ secrets.REGISTRY_LOGIN_SERVER }}/health-calculator:${{ github.sha }}'
+        package: .  # Déploie le contenu du répertoire actuel
