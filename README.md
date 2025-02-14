@@ -95,11 +95,8 @@ Utiliser une plateforme d'hébergement alternative gratuite
 Attendre le renouvellement des crédits Azure
 
 Note : Toute la configuration CI/CD est en place et fonctionnelle, seul le déploiement final est bloqué à cause du manque de crédits Azure.
-Copy
-Voulez-vous que je modifie ou ajoute d'autres sections ? CopyRetrySAfais le moi e redameEditmarkdownCopy# Service de Calcul de Santé 🏥
 
-## Description
-Un microservice Python pour calculer les métriques de santé (IMC et BMR) avec une API REST. Le projet est conteneurisé avec Docker et intègre un pipeline CI/CD GitHub Actions pour déploiement Azure.
+
 
 ## 🌟 Fonctionnalités
 - Calcul IMC (Indice de Masse Corporelle)
